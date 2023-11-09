@@ -19,7 +19,7 @@ describe('template spec',
       cy.task('log', 'Waiting ' + attempt * 5 * 1000 + ' milliseconds - attempt #' + attempt)
       cy.wait(attempt * 10 * 1000)
 
-      if(Cypress.env('SPI_LOGIN_URL')!="" && Cypress.env('K8S_TOKEN')!=""){
+      if(Cypress.env('SPI_LOGIN_URL') && Cypress.env('K8S_TOKEN')){
         cy.task('log', 'Visiting ' + Cypress.env('SPI_LOGIN_URL'))
         cy.visit(Cypress.env('SPI_LOGIN_URL'))
         cy.get('#k8s_token').type(Cypress.env('K8S_TOKEN'))
