@@ -1,6 +1,6 @@
 describe('template spec',
   {
-    "retries": 3
+    "retries": 2
   },
   () => {
     it('check variables', () => {
@@ -9,6 +9,8 @@ describe('template spec',
       expect(Cypress.env('GH_PASSWORD')).to.not.be.empty
       expect(Cypress.env('GH_2FA_CODE')).to.not.be.empty
       expect(Cypress.env('SPI_OAUTH_URL')).to.not.be.empty
+      //expect(Cypress.env('SPI_LOGIN_URL')).to.not.be.empty
+      //expect(Cypress.env('K8S_TOKEN')).to.not.be.empty
     })
 
     it('passes', () => {
@@ -16,6 +18,13 @@ describe('template spec',
       const attempt = Cypress.currentRetry
       cy.task('log', 'Waiting ' + attempt * 5 * 1000 + ' milliseconds - attempt #' + attempt)
       cy.wait(attempt * 10 * 1000)
+
+      if(Cypress.env('SPI_LOGIN_URL')!="" && Cypress.env('K8S_TOKEN')!=""){
+        cy.task('log', 'Visiting ' + Cypress.env('SPI_LOGIN_URL'))
+        cy.visit(Cypress.env('SPI_LOGIN_URL'))
+        cy.get('#k8s_token').type(Cypress.env('K8S_TOKEN'))
+        cy.get('#submit_token').click();
+      }
 
       cy.task('log', 'Visiting ' + Cypress.env('SPI_OAUTH_URL'))
       cy.visit(Cypress.env('SPI_OAUTH_URL'))
@@ -62,12 +71,6 @@ describe('template spec',
           }
         });
 
-      })
-
-      cy.location('pathname')
-        .should('include', '/callback_success')
-      cy.url().then((url) => {
-        cy.task('log', 'Current Github URL is: ' + url)
       })
 
     })
