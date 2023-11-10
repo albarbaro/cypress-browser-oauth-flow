@@ -1,6 +1,6 @@
 describe('template spec',
   {
-    "retries": 2
+    "retries": 3
   },
   () => {
     it('check variables', () => {
@@ -9,8 +9,8 @@ describe('template spec',
       expect(Cypress.env('GH_PASSWORD')).to.not.be.empty
       expect(Cypress.env('GH_2FA_CODE')).to.not.be.empty
       expect(Cypress.env('SPI_OAUTH_URL')).to.not.be.empty
-      //expect(Cypress.env('SPI_LOGIN_URL')).to.not.be.empty
-      //expect(Cypress.env('K8S_TOKEN')).to.not.be.empty
+      expect(Cypress.env('SPI_LOGIN_URL')).to.not.be.empty
+      expect(Cypress.env('K8S_TOKEN')).to.not.be.empty
     })
 
     it('passes', () => {
