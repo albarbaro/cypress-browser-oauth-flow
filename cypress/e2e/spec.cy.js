@@ -1,9 +1,11 @@
-describe('template spec',
+describe('SPI oauth flow',
   {
     "retries": 3
   },
   () => {
-    it('check variables', () => {
+
+    beforeEach(() => {
+
       console.log(Cypress.env('SPI_OAUTH_URL'))
       expect(Cypress.env('GH_USER')).to.not.be.empty
       expect(Cypress.env('GH_PASSWORD')).to.not.be.empty
@@ -11,13 +13,14 @@ describe('template spec',
       expect(Cypress.env('SPI_OAUTH_URL')).to.not.be.empty
       expect(Cypress.env('SPI_LOGIN_URL')).to.not.be.empty
       expect(Cypress.env('K8S_TOKEN')).to.not.be.empty
+    
     })
 
-    it('passes', () => {
+    it('performs github oauth flow', () => {
 
       const attempt = Cypress.currentRetry
-      cy.task('log', 'Waiting ' + attempt * 5 * 1000 + ' milliseconds - attempt #' + attempt)
-      cy.wait(attempt * 10 * 1000)
+      cy.task('log', 'Waiting ' + attempt * 15 * 1000 + ' milliseconds - attempt #' + attempt)
+      cy.wait(attempt * 15 * 1000)
 
       if(Cypress.env('SPI_LOGIN_URL') && Cypress.env('K8S_TOKEN')){
         cy.task('log', 'Visiting ' + Cypress.env('SPI_LOGIN_URL'))
